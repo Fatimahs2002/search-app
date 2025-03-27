@@ -6,54 +6,44 @@ import "primeicons/primeicons.css";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 
-
 const articles = [
-
-     {
-     id: 1,
-     title: "Understanding the difference between grid-template and grid-auto",
-     date: "Oct 09, 2018",
-     content: "With all the new properties related to CSS Grid Layout, one of the distinctions that always confused me was the difference between the grid-template-* and grid-auto-* properties. Specifically the difference between grid-template-rows/columns and grid-auto-rows/columns.",
-     },
-     
-     {
-     id: 2,
-     title: "Recreating the GitHub Contribution Graph with CSS Grid Layout",
-     date: "Nov 15, 2019",
-     content:"A deep dive into how the GitHub contribution graph can be recreated using CSS Grid. cdd cdd cdd",
-     },
-     
-     ];
+  {
+    id: 1,
+    title: "Understanding the difference between grid-template and grid-auto",
+    date: "Oct 09, 2018",
+    content:
+      "With all the new properties related to CSS Grid Layout, one of the distinctions that always confused me was the difference between the grid-template-* and grid-auto-* properties. Specifically the difference between grid-template-rows/columns and grid-auto-rows/columns.",
+  },
+  {
+    id: 2,
+    title: "Recreating the GitHub Contribution Graph with CSS Grid Layout",
+    date: "Nov 15, 2019",
+    content: "A deep dive into how the GitHub contribution graph can be recreated using CSS Grid. cdd cdd cdd",
+  },
+];
 
 const highlightText = (text, query, countOccurrences) => {
+  if (!query) return text;
 
-     if (!query) return text;
-     
-     const regex = new RegExp(`(${query})`, "gi");
-     
-     const parts = text.split(regex);
-     
-     if (countOccurrences) {
-     
-     return parts.filter((part) => part.toLowerCase() === query.toLowerCase()).length;
-     
-     }
-     
-     return parts.map((part, index) =>
-     
-     part.toLowerCase() === query.toLowerCase() ? (
-     
-     <span key={index} style={{ backgroundColor: "yellow" }}>{part}</span>
-     
-     ) : (
-     
-     part
-     
-     )
-     
-     );
-     
-     };
+  const regex = new RegExp(`(${query})`, "gi");
+
+  const parts = text.split(regex);
+
+  if (countOccurrences) {
+    return parts.filter((part) => part.toLowerCase() === query.toLowerCase()).length;
+  }
+
+  return parts.map((part, index) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <span key={index} style={{ backgroundColor: "yellow" }}>
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+};
+
 const SearchApp = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -71,14 +61,14 @@ const SearchApp = () => {
       style={{
         padding: "20px",
         maxWidth: "800px",
-        margin: "0 auto", 
-        width: "100%", 
-        boxSizing: "border-box", 
+        margin: "0 auto",
+        width: "100%",
+        boxSizing: "border-box",
       }}
     >
       <h2>Search</h2>
 
-      <IconField iconPosition="right">
+      <IconField iconPosition="right" className="">
         <InputText
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -88,7 +78,7 @@ const SearchApp = () => {
             width: "100%",
             background: "white",
             color: "black",
-            height: "35px",
+            height: "40px",
             borderColor: "black",
             borderRadius: "none",
             boxShadow: "none",
@@ -97,25 +87,31 @@ const SearchApp = () => {
           onFocus={(e) => (e.target.style.boxShadow = "none")}
         />
         <InputIcon
-          className="pi pi-times text-center"
+          className="pi pi-times text-center "
           onClick={(e) => {
             e.stopPropagation();
             setSearchQuery("");
           }}
           style={{
-            cursor: "pointer",
-            fontSize: "10px",
-            backgroundColor: "gray",
-            color: "white",
-            borderRadius: "1rem",
-            padding: "5px",
-          }}
+               cursor: "pointer",
+               fontSize: "15px",
+               backgroundColor: "gray",
+               color: "white",
+               borderRadius: "1rem",
+               padding: "5px",
+               marginTop:"-12px"
+             }}
         />
       </IconField>
 
-      <p>
-        {searchQuery && <strong>{countOccurrences()}</strong>} <strong>Posts</strong> were found.
+
+{searchQuery &&
+     <p>
+ <strong>{countOccurrences()}</strong> <strong>Posts</strong> were found.
+     
       </p>
+}
+
       {articles.map((article) => (
         <div key={article.id} style={{ marginBottom: "20px" }}>
           <h3>{highlightText(article.title, searchQuery)}</h3>
